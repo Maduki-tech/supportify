@@ -1,19 +1,20 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { organization } from "~/server/db/schema";
 
 export const organizationRoute = createTRPCRouter({
-    create: publicProcedure
+    create: protectedProcedure
         .input(z.object({ name: z.string().min(1) }))
         .mutation(async ({ ctx, input }) => {
-            await ctx.db.insert(organization).values({
+            const [newOrg] = await ctx.db.insert(organization).values({
                 name: input.name,
-            })
+            }).returning();
+            return newOrg!;
         }),
 
-    getOrgByID: publicProcedure
+    getOrgByID: protectedProcedure
         .input(z.object({ id: z.number() }))
         .query(async ({ ctx, input }) => {
             const org = await ctx.db.query.organization.findFirst({
@@ -22,7 +23,7 @@ export const organizationRoute = createTRPCRouter({
             return org ?? null
         }),
 
-    deleteOrgByID: publicProcedure
+    deleteOrgByID: protectedProcedure
         .input(z.object({ id: z.number() }))
         .mutation(async ({ ctx, input }) => {
             await ctx.db.update(organization)

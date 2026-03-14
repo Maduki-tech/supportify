@@ -15,6 +15,13 @@
       "when": 1773174794437,
       "tag": "0001_chemical_eddie_brock",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773524598719,
+      "tag": "0002_complex_landau",
+      "breakpoints": true
     }
   ]
 }
