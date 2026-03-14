@@ -1,11 +1,11 @@
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { projects } from "~/server/db/schema";
 
 import { z } from "zod";
 
 export const projectRoute = createTRPCRouter({
 
-    create: publicProcedure
+    create: protectedProcedure
         .input(z.object({
             name: z.string().min(1),
             organizationId: z.number(),
