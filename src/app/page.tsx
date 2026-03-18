@@ -1,12 +1,15 @@
-import { HydrateClient } from "~/trpc/server";
-import { UserName } from "./_components/userName";
+'use client'
 
-export default async function Home() {
-    return (
-        <HydrateClient>
-            <main>
-                <UserName />
-            </main>
-        </HydrateClient>
-    );
+import { useRouter } from "next/router"
+import { useEffect } from "react"
+
+export default function Home() {
+    // redirect("/dashboard")
+    const router = useRouter()
+
+    useEffect(() => {
+        router.push("/dashboard")
+    }, [])
+
+
 }
